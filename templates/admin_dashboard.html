@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Admin Dashboard</h2>
+
+        <!-- User Table -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>User Management</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>User Type</th>
+                            <th>Pass Status</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if users %}
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user['name'] }}</td>
+                                <td>{{ user['email'] }}</td>
+                                <td>{{ user['user_type'] }}</td>
+                                <td>{{ user['pass_status'] }}</td>
+                                <td>
+                                    <!-- Display User Image -->
+                                    {% if user['image_path'] %}
+                                    <img src="{{ url_for('static', filename=user['image_path']) }}" 
+                                         alt="User Image" 
+                                         style="width: 50px; height: 50px; border-radius: 50%;">
+                                    {% else %}
+                                    <img src="{{ url_for('static', filename='uploads/default_image.jpg') }}" 
+                                         alt="Default Image" 
+                                         style="width: 50px; height: 50px; border-radius: 50%;">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Single Buttons for Actions -->
+                                    <form method="POST" action="{{ url_for('manage_pass', user_id=user['id'], action='disable') }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-warning btn-sm">Disable</button>
+                                    </form>
+                                    <form method="POST" action="{{ url_for('manage_pass', user_id=user['id'], action='enable') }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-success btn-sm">Enable</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No users found</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Logs Table -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h4>User Logs</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>User Name</th>
+                            <th>Entry Time</th>
+                            <th>Exit Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if logs %}
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log['name'] }}</td>
+                                <td>{{ log['entry_time'] }}</td>
+                                <td>{{ log['exit_time'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">No logs available</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Generate Pass -->
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Generate Pass for User</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin_generate_pass') }}">
+                    <div class="form-group">
+                        <label for="user_id">Select User:</label>
+                        <select name="user_id" id="user_id" class="form-control" required>
+                            {% for user in users %}
+                                <option value="{{ user['id'] }}">{{ user['name'] }} ({{ user['email'] }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Generate Pass</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+
+</head>
+<body>
+    <div class="form-container">
+        <h1>Register</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Name" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            
+            <label>User Type:</label>
+            <select name="user_type" id="user_type" onchange="adjustFormFields()" required>
+                <option value="Bicycle">Bicycle</option>
+                <option value="Motorbike">Motorbike</option>
+                <option value="Car">Car</option>
+            </select><br>
+            
+            <input type="file" name="image"><br>
+            <input type="date" name="valid_until" required><br>
+            
+            <!-- Bicycle fields -->
+            <div id="bicycle_fields" style="display:none;">
+                <input type="text" name="bike_color" placeholder="Bike Color"><br>
+                <input type="text" name="bike_type" placeholder="Bike Type"><br>
+            </div>
+            
+            <!-- Motorbike fields -->
+            <div id="motorbike_fields" style="display:none;">
+                <input type="text" name="motorbike_registration" placeholder="Motorbike Registration"><br>
+                <input type="text" name="motorbike_model" placeholder="Motorbike Model"><br>
+            </div>
+            
+            <!-- Car fields -->
+            <div id="car_fields" style="display:none;">
+                <input type="text" name="car_color" placeholder="Car Color"><br>
+                <input type="text" name="car_model" placeholder="Car Model"><br>
+                <input type="text" name="car_registration" placeholder="Car Registration"><br>
+            </div>
+            
+            <button type="submit">Register</button>
+        </form>
+        
+        <p class="mt-3">Already have an account? 
+            <a href="{{ url_for('login') }}" class="btn btn-link">Login</a>
+        </p>
+    </div>
+</body>
+
+<script>
+    // Function to dynamically show/hide fields based on user selection
+    function adjustFormFields() {
+        const userType = document.getElementById('user_type').value;
+
+        // Hide all optional fields by default
+        document.getElementById('bicycle_fields').style.display = 'none';
+        document.getElementById('motorbike_fields').style.display = 'none';
+        document.getElementById('car_fields').style.display = 'none';
+
+        // Show fields based on selection
+        if (userType === 'Bicycle') {
+            document.getElementById('bicycle_fields').style.display = 'block';
+        } else if (userType === 'Motorbike') {
+            document.getElementById('motorbike_fields').style.display = 'block';
+        } else if (userType === 'Car') {
+            document.getElementById('car_fields').style.display = 'block';
+        }
+    }
+</script>
+</html>

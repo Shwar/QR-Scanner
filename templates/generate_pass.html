@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Pass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        img.qr-section {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        img.image{
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%; 
+            border: 5px solid #0073e6; 
+            margin: 0 auto; 
+        }
+        h1 {
+            color: #0073e6;
+        }
+        .qr-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TUMPass Pass</h1>
+        
+          
+        <div class="qr-section">
+            <h3 style="color: #0073e6;">SCAN HERE:</h3>
+            <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+            
+        </div>
+        <a href="data:image/png;base64,{{ qr_code }}" download="QR_Code.png" class="btn btn-success">Download</a>
+    <button onclick="window.print()">Print</button>
+    </div>
+
+
+
+</body>
+</html>

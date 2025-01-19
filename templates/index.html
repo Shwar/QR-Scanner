@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUM E-Mobility System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-heading">Welcome to the TUMPass Generating System</h1>
+        <p class="intro-text">Please choose an option:</p>
+        
+        <!-- Admin and User buttons -->
+        <div class="button-container">
+            <a href="{{ url_for('admin_login') }}" class="btn btn-admin">Admin</a>
+            <a href="{{ url_for('login') }}" class="btn btn-user">User</a>
+        </div>
+    </div>
+</body>
+</html>

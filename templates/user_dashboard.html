@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f4f7fc; /* Light background color */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .user-dashboard-container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        .dashboard-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .user-image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            font-size: 16px;
+            padding: 12px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .mb-4 {
+            margin-bottom: 20px;
+        }
+
+        .lead {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container user-dashboard-container">
+        <div class="card dashboard-card shadow">
+            <div class="card-header text-center">
+                <h2>Welcome, {{ user['name'] }}</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Your Pass Status: <strong>{{ user['pass_status'] }}</strong></p>
+
+                <!-- Display User Image -->
+                <div class="user-image">
+                    {% if user['image_path'] %}
+                    <img src="{{ url_for('static', filename=user['image_path']) }}" alt="User Image">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='uploads/default_image.jpg') }}" alt="Default Image">
+                    {% endif %}
+                </div>
+
+                <!-- Generate Pass Button -->
+                {% if user['pass_status'] != 'Disabled' %}
+                <form action="{{ url_for('generate_pass') }}" method="POST" class="mb-4">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Generate Pass</button>
+                </form>
+                {% else %}
+                <button class="btn btn-secondary btn-lg btn-block" disabled>Generate Pass (Disabled)</button>
+                {% endif %}
+
+                <!-- Logout Button -->
+                <a href="/logout" class="btn btn-danger btn-block" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
