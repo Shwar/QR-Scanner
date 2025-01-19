@@ -25,7 +25,8 @@ conn = mysql.connector.connect(
     host="localhost",
     user="root",
     password="don05@Simon",
-    database="bikesystem"
+    database="bikesystem",
+    port = 3307
 )
 cursor = conn.cursor(dictionary=True)
 
